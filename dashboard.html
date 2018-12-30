@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>P I E C Z A R K I</title>
+    <link rel="stylesheet" href="style.css"/>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+    <script src="liquidFillGauge.js" language="JavaScript"></script>
+    <script src="http://underscorejs.org/underscore-min.js"></script>
+
+    <link href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet">
+</head>
+<body>
+<header>
+    <h1 class="text-center display-3"><a href="/" class="deco-none">P I E C Z A R K I</a></h1>
+
+    <nav>
+        <select id="cultivation-picker" class="selectpicker" data-live-search="true">
+            <option value="">None</option>
+        </select>
+        <input name="updateButton"
+               type="button"
+               value="Update"
+               onclick="getStats()" />
+    </nav>
+</header>
+
+<main>
+    <section class="section-current">
+        <div>
+            <div>Air humidity</div>
+            <svg id="air-humid-gauge" class="gauge" onclick="airHumidGauge.update(NewValue());"></svg>
+            <div>Last update: <text id="air-humid-date"></text></div>
+        </div>
+        <div>
+            <div>Soil humidity</div>
+            <svg id="soil-humid-gauge" class="gauge" onclick="soilHumidGauge.update(NewValue());"></svg>
+            <div>Last update: <text id="soil-humid-date"></text></div>
+        </div>
+        <div>
+            <div>Air temperature</div>
+            <svg id="air-temp-gauge" class="gauge" onclick="airTempGauge.update(NewValue());"></svg>
+            <div>Last update: <text id="air-temp-date"></text></div>
+        </div>
+
+    </section>
+    <section class="section-history">
+        <div id="air-humid-graph"></div>
+        <div id="soil-humid-graph"></div>
+        <div id="air-temp-graph"></div>
+    </section>
+
+    <script src="script.js" language="JavaScript"></script>
+
+</main>
+</body>
+</html>

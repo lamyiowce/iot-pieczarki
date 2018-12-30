@@ -1,0 +1,67 @@
+// stats?id=ID
+// Sorted by time!
+{
+    "temp": [{
+			"date": "23-02-2018T13:45",
+			"value": 18
+		},
+		{
+			"date": "23-02-2018T14:15",
+			"value": 18.2
+		},
+		{
+			"date": "23-02-2018T14:45",
+			"value": 20
+		},
+		{
+			"date": "23-02-2018T16:45",
+			"value": 18.4
+		}
+	],
+	"airHumid": [{
+			"date": "23-02-2018T13:45",
+			"value": 88
+		},
+		{
+			"date": "23-02-2018T14:15",
+			"value": 92.2
+		},
+		{
+			"date": "23-02-2018T15:45",
+			"value": 93
+		},
+		{
+			"date": "23-02-2018T16:45",
+			"value": 95.4
+		}
+	],
+	"soilHumid": [{
+			"date": "23-02-2018T13:45",
+			"value": 40
+		},
+		{
+			"date": "23-02-2018T15:15",
+			"value": 46
+		},
+		{
+			"date": "23-02-2018T17:45",
+			"value": 45.3
+		}
+	]
+}
+
+// /cultivations
+[
+  {
+    "id": 1,
+    "name": "Pierwsza uprawa"
+  },
+  {
+    "id": 3,
+    "name": "Druga uprawa"
+  },
+  {
+    "id": 35,
+    "name": "Inna uprawa"
+  }
+]

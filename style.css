@@ -1,0 +1,21 @@
+.liquidFillGaugeText {
+    font-family: 'Orbitron', sans-serif;
+}
+
+.gauge {
+    height: 250px;
+}
+
+#air-humid-graph-path {
+    stroke: steelblue;
+    stroke-width: 2px;
+    fill: steelblue;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: grey;
+    stroke-width: 1px;
+    shape-rendering: crispEdges;
+}
