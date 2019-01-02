@@ -1,15 +1,67 @@
+body {
+    font-family: 'Open Sans', sans-serif;
+
+}
+.container {
+    margin: 0 auto;
+    width: 800px;
+}
+
+.deco-none {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+.deco-none:link {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+.deco-none:hover {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+section {
+    float: left;
+
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.logo {
+    height: 400px;
+}
+
 .liquidFillGaugeText {
     font-family: 'Orbitron', sans-serif;
 }
 
 .gauge {
-    height: 250px;
+    height: 150px;
+    width: 150px;
 }
 
 #air-humid-graph-path {
-    stroke: steelblue;
-    stroke-width: 2px;
-    fill: steelblue;
+    stroke: #0c3d70;
+    stroke-width: 1px;
+    fill: none;
+}
+
+#soil-humid-graph-path {
+    stroke: #4CAF50;
+    stroke-width: 1px;
+    fill: none;
+}
+
+#air-temp-graph-path {
+    stroke: #FF5722;
+    stroke-width: 1px;
+    fill: none;
+}
+
+.gauge-container {
+    float: left;
 }
 
 .axis path,
@@ -18,4 +70,9 @@
     stroke: grey;
     stroke-width: 1px;
     shape-rendering: crispEdges;
+}
+
+.x.axis {
+    font-size: 10pt;
+
 }

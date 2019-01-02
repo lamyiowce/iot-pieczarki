@@ -20,14 +20,14 @@ airHumidConfig.waveColor = "#B3E5FC";
 let airHumidGauge = loadLiquidFillGauge("air-humid-gauge", 53, airHumidConfig);
 
 let soilHumidConfig = getDefaultGaugeSettings();
-soilHumidConfig.circleColor = "#388E3C"; // dark primary
-soilHumidConfig.waveTextColor = "#4CAF50"; // primary
+soilHumidConfig.circleColor = "#4CAF50"; // dark primary
+soilHumidConfig.waveTextColor = "#388E3C"; // primary
 soilHumidConfig.waveColor = "#C8E6C9"; // light primary
 let soilHumidGauge = loadLiquidFillGauge("soil-humid-gauge", 53, soilHumidConfig);
 
 let airTempConfig = getDefaultGaugeSettings();
-airTempConfig.circleColor = "#E64A19"; // dark primary
-airTempConfig.waveTextColor = "#FF5722"; // primary
+airTempConfig.circleColor = "#FF5722"; // dark primary
+airTempConfig.waveTextColor = "#E64A19"; // primary
 airTempConfig.waveColor = "#FFCCBC"; // light primary
 airTempConfig.waveAnimate = false;
 airTempConfig.waveHeight = 0;
@@ -40,9 +40,9 @@ let airTempGauge = loadLiquidFillGauge("air-temp-gauge", 53, airTempConfig);
 // Parse the date / time
 let parseDate = d3.time.format("%d-%m-%YT%H:%M").parse; // sample: 23-02-2018T13:45
 
-const margin = {top: 30, right: 20, bottom: 30, left: 50};
+const margin = {top: 30, right: 20, bottom: 80, left: 50};
 
-const width = 600 - margin.left - margin.right;
+const width = 400 - margin.left - margin.right;
 const height = 270 - margin.top - margin.bottom;
 // Set the ranges
 let x = d3.time.scale().range([0, width]);
@@ -56,10 +56,10 @@ let yAxis = d3.svg.axis().scale(y)
     .orient("left");
 
 // Define the line
-var valueline = d3.svg.area()
+var valueline = d3.svg.line()
     .x(function(d) { return x(d.date); })
-    .y0(height)
-    .y1(function(d) { return y(d.value); });
+    //.y0(height)
+    .y(function(d) { return y(d.value); });
 
 loadCultivations();
 createGraph("air-humid-graph");
@@ -88,7 +88,13 @@ function createGraph(graphId) {
     svg.append("g")
         .attr("class", "x axis")
         .attr("transform", "translate(0," + height + ")")
-        .call(xAxis);
+        .call(xAxis)
+    .selectAll("text")
+        .attr("y", 0)
+        .attr("x", 9)
+        .attr("dy", ".35em")
+        .attr("transform", "rotate(90)")
+        .style("text-anchor", "start");
 
 // Add the Y Axis
     svg.append("g")
@@ -106,11 +112,12 @@ function loadCultivations(){
                 '<option value="' + cultElem.id + '">' + cultElem.name + '</option>'
             ).join('\n');
             $("#cultivation-picker").html(cultOpts);
+            getStats();
         });
 }
 
 function getStats() {
-    let statsUrl = "http://www.mocky.io/v2/5c293e122e00003400c18a23";
+    let statsUrl = "http://www.mocky.io/v2/5c2d35d82e00007dc4e878a9";
     statsUrl += "?id=" + getCultivationId();
     $.getJSON(statsUrl)
         .done(function(statsJson) {
@@ -130,15 +137,18 @@ function getStats() {
 }
 
 function setCurrent({temp, airHumid, soilHumid} = {}) {
+    $("time#air-temp-date").timeago("update", temp.date);
+    $("time#air-humid-date").timeago("update", temp.date);
+    $("time#soil-humid-date").timeago("update", temp.date);
     airTempGauge.update(temp.value);
     airHumidGauge.update(airHumid.value);
     soilHumidGauge.update(soilHumid.value);
 }
 
-function setData(data, graphId) {
+function setData(data, graphId, yExtent) {
     console.log(data);
     x.domain(d3.extent(data, function(d) { return d.date; }));
-    y.domain([0, d3.max(data, function(d) { return d.value; })]);
+    y.domain(yExtent);
     let svg = d3.select("#" + graphId).transition();
     // Make the changes
     svg.select(".line")   // change the line
@@ -146,22 +156,28 @@ function setData(data, graphId) {
         .attr("d", valueline(data));
     svg.select(".x.axis") // change the x axis
         .duration(750)
-        .call(xAxis);
+        .call(xAxis)
+    .selectAll("text")
+        .attr("y", 0)
+        .attr("x", 9)
+        .attr("dy", ".35em")
+        .attr("transform", "rotate(90)")
+        .style("text-anchor", "start");
     svg.select(".y.axis") // change the y axis
         .duration(750)
         .call(yAxis);
 }
 
 function setTemp(data) {
-    setData(data, "air-temp-graph");
+    setData(data, "air-temp-graph", [-10, 40]);
 }
 
 function setAirHumid(data) {
-    setData(data, "air-humid-graph");
+    setData(data, "air-humid-graph", [0, 100]);
 }
 
 function setSoilHumid(data) {
-    setData(data, "soil-humid-graph");
+    setData(data, "soil-humid-graph", [0, 100]);
 }
 
 function getCultivationId() {
