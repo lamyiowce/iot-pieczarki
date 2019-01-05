@@ -20,10 +20,8 @@
 </script>
 </head>
 <body>
-<header class="container">
-    <div>
-        <a href="/" class="deco-none"><img class="logo" src="100.jpg"></a>
-    </div>
+<header class="centerer">
+    <a href="/" class="deco-none"><img class="logo" src="100.jpg"></a>
 
     <nav>
         <select id="cultivation-picker" class="selectpicker" data-live-search="true" onchange="getStats()">
@@ -36,36 +34,39 @@
     </nav>
 </header>
 
-<main class="container">
-    <section class="section-current">
-        <div class="gauge-container">
-            <div>Air humidity</div>
-            <svg id="air-humid-gauge" class="gauge" onclick="airHumidGauge.update(NewValue());"></svg>
-            <div>Last update:
-                <time class="timeago" datetime="" id="air-humid-date"></time>
-            </div>
-        </div>
-        <div class="gauge-container">
-            <div>Soil humidity</div>
-            <svg id="soil-humid-gauge" class="gauge" onclick="soilHumidGauge.update(NewValue());"></svg>
-            <div>Last update:
-                <time class="timeago" datetime="" id="soil-humid-date"></time>
-            </div>
-        </div>
-        <div class="gauge-container">
-            <div>Air temperature</div>
-            <svg id="air-temp-gauge" class="gauge" onclick="airTempGauge.update(NewValue());"></svg>
-            <div>Last update:
-                <time class="timeago" datetime="" id="air-temp-date"></time>
-            </div>
-        </div>
+<main class="centerer">
+    <div class="centerer">
 
-    </section>
-    <section class="section-history">
-        <div class="graph-container" id="air-humid-graph"><div>Air humidity</div></div>
-        <div class="graph-container" id="soil-humid-graph"><div>Soil humidity</div></div>
-        <div class="graph-container" id="air-temp-graph"><div>Air temperature</div></div>
-    </section>
+        <section class="section-current">
+            <div class="gauge-container">
+                <div>Air humidity</div>
+                <svg id="air-humid-gauge" class="gauge" onclick="airHumidGauge.update(NewValue());"></svg>
+                <div>Last update:
+                    <time class="timeago" datetime="" id="air-humid-date"></time>
+                </div>
+            </div>
+            <div class="gauge-container">
+                <div>Soil humidity</div>
+                <svg id="soil-humid-gauge" class="gauge" onclick="soilHumidGauge.update(NewValue());"></svg>
+                <div>Last update:
+                    <time class="timeago" datetime="" id="soil-humid-date"></time>
+                </div>
+            </div>
+            <div class="gauge-container">
+                <div>Air temperature</div>
+                <svg id="air-temp-gauge" class="gauge" onclick="airTempGauge.update(NewValue());"></svg>
+                <div>Last update:
+                    <time class="timeago" datetime="" id="air-temp-date"></time>
+                </div>
+            </div>
+
+        </section>
+        <section class="section-history">
+            <div class="graph-container" id="air-humid-graph"><div>Air humidity</div></div>
+            <div class="graph-container" id="soil-humid-graph"><div>Soil humidity</div></div>
+            <div class="graph-container" id="air-temp-graph"><div>Air temperature</div></div>
+        </section>
+    </div>
 
     <script src="script.js" language="JavaScript"></script>
 

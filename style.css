@@ -1,10 +1,12 @@
 body {
     font-family: 'Open Sans', sans-serif;
-
-}
-.container {
+    width: 600px;
     margin: 0 auto;
-    width: 800px;
+}
+
+.centerer {
+    margin: 0 auto;
+    width: fit-content;
 }
 
 .deco-none {
@@ -24,13 +26,10 @@ body {
 
 section {
     float: left;
-
-    margin-left: auto;
-    margin-right: auto;
 }
 
 .logo {
-    height: 400px;
+    width: 600px;
 }
 
 .liquidFillGaugeText {
@@ -62,6 +61,7 @@ section {
 
 .gauge-container {
     float: left;
+    width: 33%;
 }
 
 .axis path,

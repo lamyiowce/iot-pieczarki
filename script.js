@@ -42,7 +42,7 @@ let parseDate = d3.time.format("%d-%m-%YT%H:%M").parse; // sample: 23-02-2018T13
 
 const margin = {top: 30, right: 20, bottom: 80, left: 50};
 
-const width = 400 - margin.left - margin.right;
+const width = 600 - margin.left - margin.right;
 const height = 270 - margin.top - margin.bottom;
 // Set the ranges
 let x = d3.time.scale().range([0, width]);
