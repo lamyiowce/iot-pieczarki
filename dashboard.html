@@ -24,13 +24,15 @@
     <a href="/" class="deco-none"><img class="logo" src="100.jpg"></a>
 
     <nav>
-        <select id="cultivation-picker" class="selectpicker" data-live-search="true" onchange="getStats()">
+        <select id="cultivation-picker" class="form-control" data-live-search="true" onchange="getStats()">
             <option value="">None</option>
         </select>
         <input name="updateButton"
                type="button"
                value="Check for new data"
-               onclick="getStats()" />
+               onclick="getStats()"
+               class="btn btn-primary"
+        />
     </nav>
 </header>
 
