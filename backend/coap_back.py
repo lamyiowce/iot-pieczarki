@@ -5,6 +5,7 @@ import aiocoap.resource as resource
 import aiocoap
 import json
 import sqlite3 as db
+import os
 
 CULTIVATION = 1
 
@@ -32,10 +33,13 @@ logging.basicConfig(level=logging.INFO)
 logging.getLogger("coap-server").setLevel(logging.DEBUG)
 
 def main():
+    print("Transport engine:")
+    print(os.environ['AIOCOAP_SERVER_TRANSPORT'])
+    print(aiocoap.defaults.get_default_servertransports())
     root = resource.Site()
     root.add_resource(('data',), DataResource())
     root.add_resource(('test',), CoapTest())
-    asyncio.Task(aiocoap.Context.create_server_context(root))
+    asyncio.Task(aiocoap.Context.create_server_context(root, bind=('192.168.0.129', 8080)))
     asyncio.get_event_loop().run_forever()
 
 if __name__ == "__main__":
