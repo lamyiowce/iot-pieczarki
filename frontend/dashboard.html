@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>P I E C Z A R K I</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css"/>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+    <script src="liquidFillGauge.js" language="JavaScript"></script>
+    <script src="http://underscorejs.org/underscore-min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timeago/1.6.3/jquery.timeago.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet">
+    <script type="text/javascript">
+   jQuery(document).ready(function() {
+     $("time.timeago").timeago();
+   });
+</script>
+</head>
+<body>
+<header class="centerer">
+    <a href="/" class="deco-none"><img class="logo" src="100.jpg"></a>
+
+    <nav>
+        <select id="cultivation-picker" class="form-control" data-live-search="true" onchange="getStats()">
+            <option value="">None</option>
+        </select>
+        <input name="updateButton"
+               type="button"
+               value="Check for new data"
+               onclick="getStats()"
+               class="btn btn-primary"
+        />
+        Last check: <time class="timeago" datetime="" id="last-check">never</time>
+    </nav>
+</header>
+
+<main class="centerer">
+    <div class="centerer">
+        <section class="section-growing">
+            <h3 id="growing">Growing...</h3>
+            Last update: <time class="timeago" datetime="" id="growing-time">never</time>
+
+        </section>
+        <section class="section-current">
+            <div class="gauge-container">
+                <h3>Air humidity</h3>
+                <svg id="air-humid-gauge" class="gauge" onclick="airHumidGauge.update(NewValue());"></svg>
+                <div>Last update:
+                    <time class="timeago" datetime="" id="air-humid-date">never</time>
+                </div>
+                <select id="air-humid-freq" class="form-control" onchange="sendFreq(this, 'air-humid')">
+                    <option value="0">Never</option>
+                    <option value="-1">Constant</option>
+                    <option value="1">1 min</option>
+                    <option value="5">5 min</option>
+                    <option value="15">15 min</option>
+                    <option value="30">30 min</option>
+                    <option value="60">1 h</option>
+                    <option value="120">2 h</option>
+                    <option value="240">4 h</option>
+                    <option value="480">8 h</option>
+                    <option value="720">12 h</option>
+                    <option value="1440">24 h</option>
+                </select>
+                <text id="air-humid-msg"></text>
+            </div>
+            <div class="gauge-container">
+                <h3>Soil humidity</h3>
+                <svg id="soil-humid-gauge" class="gauge" onclick="soilHumidGauge.update(NewValue());"></svg>
+                <div>Last update:
+                    <time class="timeago" datetime="" id="soil-humid-date">never</time>
+                </div>
+                <select id="soil-humid-freq" class="form-control" onchange="sendFreq(this, 'soil-humid')">
+                    <option value="0">Never</option>
+                    <option value="-1">Constant</option>
+                    <option value="1">1 min</option>
+                    <option value="5">5 min</option>
+                    <option value="15">15 min</option>
+                    <option value="30">30 min</option>
+                    <option value="60">1 h</option>
+                    <option value="120">2 h</option>
+                    <option value="240">4 h</option>
+                    <option value="480">8 h</option>
+                    <option value="720">12 h</option>
+                    <option value="1440">24 h</option>
+                </select>
+                <text id="soil-humid-msg"></text>
+            </div>
+            <div class="gauge-container">
+                <h3>Air temperature</h3>
+                <svg id="air-temp-gauge" class="gauge" onclick="airTempGauge.update(NewValue());"></svg>
+                <div>Last update:
+                    <time class="timeago" datetime="" id="air-temp-date">never</time>
+                </div>
+                <select id="air-temp-freq" class="form-control" onchange="sendFreq(this, 'air-temp')">
+                    <option value="0">Never</option>
+                    <option value="-1">Constant</option>
+                    <option value="1">1 min</option>
+                    <option value="5">5 min</option>
+                    <option value="15">15 min</option>
+                    <option value="30">30 min</option>
+                    <option value="60">1 h</option>
+                    <option value="120">2 h</option>
+                    <option value="240">4 h</option>
+                    <option value="480">8 h</option>
+                    <option value="720">12 h</option>
+                    <option value="1440">24 h</option>
+                </select>
+                <text id="air-temp-msg"></text>
+            </div>
+
+        </section>
+        <section class="section-history">
+            <div class="graph-container" id="air-humid-graph"><h3>Air humidity</h3></div>
+            <div class="graph-container" id="soil-humid-graph"><h3>Soil humidity</h3></div>
+            <div class="graph-container" id="air-temp-graph"><h3>Air temperature</h3></div>
+        </section>
+    </div>
+
+    <script src="script.js" language="JavaScript"></script>
+
+</main>
+</body>
+</html>
