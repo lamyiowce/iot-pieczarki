@@ -5,7 +5,8 @@ CREATE TABLE cultivations (
 
 CREATE TABLE types (
     id          INTEGER     PRIMARY KEY AUTOINCREMENT,
-    name        TEXT
+    name        TEXT,
+    interval    INTEGER
 );
 
 CREATE TABLE stats (

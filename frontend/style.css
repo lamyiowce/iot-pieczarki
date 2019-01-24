@@ -37,8 +37,8 @@ section {
 }
 
 .gauge {
-    height: 150px;
-    width: 150px;
+    height: 180px;
+    width: 180px;
 }
 
 #air-humid-graph-path {
@@ -62,6 +62,7 @@ section {
 .gauge-container {
     float: left;
     width: 33%;
+    padding: 10px;
 }
 
 .axis path,
@@ -75,4 +76,16 @@ section {
 .x.axis {
     font-size: 10pt;
 
+}
+
+.section-growing {
+    width: 100%
+}
+
+h3 {
+    padding: 10px 20px 10px 20px;
+}
+
+nav {
+    padding: 10px;
 }
