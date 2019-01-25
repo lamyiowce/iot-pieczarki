@@ -12,11 +12,16 @@ CULTIVATION = 1
 class DataResource(resource.Resource):
     async def render_put(self, request):
         logger = logging.getLogger("coap-server")
-        logger.info('PUT request: %s' % request.payload.decode('utf-8'))
-        req = json.loads(request.payload.decode('utf-8'))
+        logger.info('PUT request: %s' % request.payload)
+        #req = json.loads(request.payload.decode('utf-8'))
+        buf = request.payload
+        sensor_id = buf[0]
+        data = 0
+        for i in range(1,5):
+            data = data * 256 + buf[i]
         conn = db.connect('database')
         c = conn.cursor()
-        c.execute("INSERT INTO stats (value, date, type, cultivation) VALUES (" + str(req['v']) + ", datetime('now'), " + str(req['t']) + ", " + str(CULTIVATION) + ")")
+        c.execute("INSERT INTO stats (value, date, type, cultivation) VALUES (" + str(data) + ", datetime('now'), " + str(sensor_id) + ", " + str(CULTIVATION) + ")")
         conn.commit()
         return aiocoap.Message(code = aiocoap.CREATED)
 
