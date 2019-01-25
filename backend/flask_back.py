@@ -45,6 +45,8 @@ def freq(type, value):
     c = conn.cursor()
     sql = "UPDATE types SET interval = " + str(value) + " WHERE (name LIKE '" + type + "%');"
     c.execute(sql)
+    conn.commit()
+    conn.close()
     return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
 
 
