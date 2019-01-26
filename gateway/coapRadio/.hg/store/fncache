@@ -1,0 +1,9 @@
+data/coapClient.h.i
+data/coapServer.h.i
+data/coapServer.cpp.i
+data/radioWrapper.h.i
+data/coapClient.cpp.i
+data/coapRadio.lib.i
+data/cantcoap.lib.i
+data/radioWrapper.cpp.i
+data/nRF24L01P.lib.i
