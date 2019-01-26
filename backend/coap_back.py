@@ -59,7 +59,7 @@ def main():
     root.add_resource(('data',), DataResource())
     root.add_resource(('test',), CoapTest())
     root.add_resource(('conf',), ConfigResource())
-    asyncio.Task(aiocoap.Context.create_server_context(root, bind=('192.168.43.140', 8080)))
+    asyncio.Task(aiocoap.Context.create_server_context(root, bind=('10.1.8.92', 8080)))
     #asyncio.Task(aiocoap.Context.create_server_context(root, bind=('localhost', 20002)))
     asyncio.get_event_loop().run_forever()
 

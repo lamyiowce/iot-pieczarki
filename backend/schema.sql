@@ -20,8 +20,9 @@ CREATE TABLE stats (
     FOREIGN KEY(cultivation) REFERENCES cultivations(id)
 );
 
-INSERT INTO types(name) VALUES ("temp");
-INSERT INTO types(name) VALUES ("airHumid");
-INSERT INTO types(name) VALUES ("soilHumid");
+INSERT INTO types(id, name, interval) VALUES (0, "growth", 60);
+INSERT INTO types(id, name, interval) VALUES (1, "airTemp", 60);
+INSERT INTO types(id, name, interval) VALUES (2, "airHumid", 60);
+INSERT INTO types(id, name, interval) VALUES (3, "soilHumid", 60);
 
 INSERT INTO cultivations(name) VALUES ("The one cultivation to rule them all");

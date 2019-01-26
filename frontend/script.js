@@ -15,6 +15,11 @@ function getDefaultGaugeSettings() {
     return myDefault;
 }
 
+Date.prototype.addHours = function(h) {    
+   this.setTime(this.getTime() + (h*60*60*1000)); 
+   return this;   
+}
+
 let airHumidConfig = getDefaultGaugeSettings();
 airHumidConfig.circleColor = "#0288D1";
 airHumidConfig.waveTextColor = "#0c3d70";
@@ -124,10 +129,11 @@ function getStats() {
     $.getJSON(statsUrl)
         .done(function(statsJson) {
             console.log(statsJson);
-            statsJson.airTemp.forEach( d => d.date = parseDate(d.date));
-            statsJson.airHumid.forEach( d => d.date = parseDate(d.date));
-            statsJson.soilHumid.forEach( d => d.date = parseDate(d.date));
-            statsJson.growth.forEach( d => d.date = parseDate(d.date));
+            statsJson.airTemp.forEach( d => d.date = parseDate(d.date).addHours(1));
+            statsJson.airHumid.forEach( d => d.date = parseDate(d.date).addHours(1));
+            statsJson.soilHumid.forEach( d => d.date = parseDate(d.date).addHours(1));
+            statsJson.soilHumid.forEach( d => d.value = d.value/10);
+            statsJson.growth.forEach( d => d.date = parseDate(d.date).addHours(1));
             setIntervals(statsJson.interval);
             setTemp(statsJson.airTemp);
             setAirHumid(statsJson.airHumid);
@@ -162,7 +168,7 @@ function setCurrent({temp, airHumid, soilHumid, growth} = {}) {
         soilHumidGauge.update(soilHumid.value);
     }
     if (growth) {
-        if (growth.value)
+        if (growth.value < 100)
             $("#growing").text("Ready!");
         else
             $("#growing").text("Growing...");
@@ -173,7 +179,7 @@ function setCurrent({temp, airHumid, soilHumid, growth} = {}) {
 
 var last = {"air-humid-graph":[], "soil-humid-graph":[], "air-temp-graph":[ ]};
 function setData(data, graphId, yExtent) {
-    if (!data)
+    if (!data || data.length == 0)
         return;
     if (data.length == last[graphId].length) {
         let sameContents = data.map((v, idx) => v.value == last[graphId][idx].value

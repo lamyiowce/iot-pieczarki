@@ -35,7 +35,7 @@ def stats(cultivation):
         res[t] = []
         for row in c:
             res[t].append({"date": row[0], "value": row[1]})
-            print(res)
+#            print(res)
     return json.dumps(res)
 
 
