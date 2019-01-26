@@ -47,72 +47,77 @@
         <section class="section-current">
             <div class="gauge-container">
                 <h3>Air humidity</h3>
-                <svg id="air-humid-gauge" class="gauge" onclick="airHumidGauge.update(NewValue());"></svg>
+                <svg id="air-humid-gauge" class="gauge"></svg>
                 <div>Last update:
                     <time class="timeago" datetime="" id="air-humid-date">never</time>
                 </div>
-                <select id="air-humid-freq" class="form-control" onchange="sendFreq(this, 'air-humid')">
-                    <option value="0">Never</option>
-                    <option value="-1">Constant</option>
-                    <option value="1">1 min</option>
-                    <option value="5">5 min</option>
-                    <option value="15">15 min</option>
-                    <option value="30">30 min</option>
-                    <option value="60">1 h</option>
-                    <option value="120">2 h</option>
-                    <option value="240">4 h</option>
-                    <option value="480">8 h</option>
-                    <option value="720">12 h</option>
-                    <option value="1440">24 h</option>
-                </select>
-                <text id="air-humid-msg"></text>
             </div>
             <div class="gauge-container">
                 <h3>Soil humidity</h3>
-                <svg id="soil-humid-gauge" class="gauge" onclick="soilHumidGauge.update(NewValue());"></svg>
+                <svg id="soil-humid-gauge" class="gauge"></svg>
                 <div>Last update:
                     <time class="timeago" datetime="" id="soil-humid-date">never</time>
                 </div>
-                <select id="soil-humid-freq" class="form-control" onchange="sendFreq(this, 'soil-humid')">
-                    <option value="0">Never</option>
-                    <option value="-1">Constant</option>
-                    <option value="1">1 min</option>
-                    <option value="5">5 min</option>
-                    <option value="15">15 min</option>
-                    <option value="30">30 min</option>
-                    <option value="60">1 h</option>
-                    <option value="120">2 h</option>
-                    <option value="240">4 h</option>
-                    <option value="480">8 h</option>
-                    <option value="720">12 h</option>
-                    <option value="1440">24 h</option>
-                </select>
-                <text id="soil-humid-msg"></text>
             </div>
             <div class="gauge-container">
                 <h3>Air temperature</h3>
-                <svg id="air-temp-gauge" class="gauge" onclick="airTempGauge.update(NewValue());"></svg>
+                <svg id="air-temp-gauge" class="gauge"></svg>
                 <div>Last update:
                     <time class="timeago" datetime="" id="air-temp-date">never</time>
                 </div>
-                <select id="air-temp-freq" class="form-control" onchange="sendFreq(this, 'air-temp')">
-                    <option value="0">Never</option>
-                    <option value="-1">Constant</option>
-                    <option value="1">1 min</option>
-                    <option value="5">5 min</option>
-                    <option value="15">15 min</option>
-                    <option value="30">30 min</option>
-                    <option value="60">1 h</option>
-                    <option value="120">2 h</option>
-                    <option value="240">4 h</option>
-                    <option value="480">8 h</option>
-                    <option value="720">12 h</option>
-                    <option value="1440">24 h</option>
-                </select>
-                <text id="air-temp-msg"></text>
             </div>
 
         </section>
+        <section class="section-config">
+            <h3>Sensor reading intervals</h3>
+            <p>Please mind that uploading sensor reading interval might take up to 30&nbsp;min (or&nbsp;so).</p>
+            Air humidity & temperature
+            <select id="air-freq" class="form-control" onchange="sendFreq(this, 'air')">
+                <option value="10">10 s</option>
+                <option value="60">1 min</option>
+                <option value="300">5 min</option>
+                <option value="900">15 min</option>
+                <option value="1800">30 min</option>
+                <option value="3600">1 h</option>
+                <option value="7200">2 h</option>
+                <option value="14400">4 h</option>
+                <option value="28800">8 h</option>
+                <option value="43200">12 h</option>
+                <option value="86400">24 h</option>
+            </select>
+            <text id="air-msg"></text><br>
+            Soil humidity
+            <select id="soil-humid-freq" class="form-control" onchange="sendFreq(this, 'soilHumid')">
+                <option value="10">10 s</option>
+                <option value="60">1 min</option>
+                <option value="300">5 min</option>
+                <option value="900">15 min</option>
+                <option value="1800">30 min</option>
+                <option value="3600">1 h</option>
+                <option value="7200">2 h</option>
+                <option value="14400">4 h</option>
+                <option value="28800">8 h</option>
+                <option value="43200">12 h</option>
+                <option value="86400">24 h</option>
+            </select>
+            <text id="soilHumid-msg"></text><br>
+            Growth
+            <select id="growth-freq" class="form-control" onchange="sendFreq(this, 'growth')">
+                <option value="10">10 s</option>
+                <option value="60">1 min</option>
+                <option value="300">5 min</option>
+                <option value="900">15 min</option>
+                <option value="1800">30 min</option>
+                <option value="3600">1 h</option>
+                <option value="7200">2 h</option>
+                <option value="14400">4 h</option>
+                <option value="28800">8 h</option>
+                <option value="43200">12 h</option>
+                <option value="86400">24 h</option>
+            </select>
+            <text id="growth-msg"></text><br>
+        </section>
+
         <section class="section-history">
             <div class="graph-container" id="air-humid-graph"><h3>Air humidity</h3></div>
             <div class="graph-container" id="soil-humid-graph"><h3>Soil humidity</h3></div>

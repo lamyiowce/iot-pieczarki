@@ -15,6 +15,11 @@ function getDefaultGaugeSettings() {
     return myDefault;
 }
 
+Date.prototype.addHours = function(h) {    
+   this.setTime(this.getTime() + (h*60*60*1000)); 
+   return this;   
+}
+
 let airHumidConfig = getDefaultGaugeSettings();
 airHumidConfig.circleColor = "#0288D1";
 airHumidConfig.waveTextColor = "#0c3d70";
@@ -67,7 +72,7 @@ loadCultivations();
 createGraph("air-humid-graph");
 createGraph("air-temp-graph");
 createGraph("soil-humid-graph");
-checkForNewData();
+//checkForNewData();
 
 function createGraph(graphId) {
     var svg = d3.select("#" + graphId)
@@ -115,7 +120,7 @@ function loadCultivations(){
                 '<option value="' + cultElem.id + '">' + cultElem.name + '</option>'
             ).join('\n');
             $("#cultivation-picker").html(cultOpts);
-            getStats();
+            checkForNewData();
         });
 }
 
@@ -124,21 +129,29 @@ function getStats() {
     $.getJSON(statsUrl)
         .done(function(statsJson) {
             console.log(statsJson);
-            statsJson.temp.forEach( d => d.date = parseDate(d.date));
-            statsJson.airHumid.forEach( d => d.date = parseDate(d.date));
-            statsJson.soilHumid.forEach( d => d.date = parseDate(d.date));
-            statsJson.growth.forEach( d => d.date = parseDate(d.date));
-            setTemp(statsJson.temp);
+            statsJson.airTemp.forEach( d => d.date = parseDate(d.date).addHours(1));
+            statsJson.airHumid.forEach( d => d.date = parseDate(d.date).addHours(1));
+            statsJson.soilHumid.forEach( d => d.date = parseDate(d.date).addHours(1));
+            statsJson.soilHumid.forEach( d => d.value = d.value/10);
+            statsJson.growth.forEach( d => d.date = parseDate(d.date).addHours(1));
+            setIntervals(statsJson.interval);
+            setTemp(statsJson.airTemp);
             setAirHumid(statsJson.airHumid);
             setSoilHumid(statsJson.soilHumid);
             setCurrent({
-                temp: statsJson.temp.last(),
+                temp: statsJson.airTemp.last(),
                 airHumid: statsJson.airHumid.last(),
                 soilHumid: statsJson.soilHumid.last(),
                 growth: statsJson.growth.last()
             });
             $("time#last-check").timeago("update", new Date());
         })
+}
+
+function setIntervals(intervals) {
+    $("#air-freq").val(intervals.airHumid);
+    $("#growth-freq").val(intervals.growth);
+    $("#soil-humid-freq").val(intervals.soilHumid);
 }
 
 function setCurrent({temp, airHumid, soilHumid, growth} = {}) {
@@ -155,7 +168,7 @@ function setCurrent({temp, airHumid, soilHumid, growth} = {}) {
         soilHumidGauge.update(soilHumid.value);
     }
     if (growth) {
-        if (growth.value)
+        if (growth.value < 100)
             $("#growing").text("Ready!");
         else
             $("#growing").text("Growing...");
@@ -164,10 +177,17 @@ function setCurrent({temp, airHumid, soilHumid, growth} = {}) {
     }
 }
 
+var last = {"air-humid-graph":[], "soil-humid-graph":[], "air-temp-graph":[ ]};
 function setData(data, graphId, yExtent) {
-    if (!data)
+    if (!data || data.length == 0)
         return;
-    console.log(data);
+    if (data.length == last[graphId].length) {
+        let sameContents = data.map((v, idx) => v.value == last[graphId][idx].value
+            && v.date.getTime() == last[graphId][idx].date.getTime()).reduce((a, b) => a && b);
+        if (sameContents)
+            return;
+    }
+    last[graphId] = data;
     x.domain(d3.extent(data, function(d) { return d.date; }));
     y.domain(yExtent);
     let svg = d3.select("#" + graphId).transition();
@@ -220,7 +240,7 @@ function sendFreq(picker, type) {
     $.get(url)
         .done(function(){ msg.text("OK!")})
         .fail(function(){ msg.text("Error.")})
-        .always(function(){ sleep(10000).then(() =>
+        .always(function(){ sleep(1000).then(() =>
             msg.text("")
         )})
 }
